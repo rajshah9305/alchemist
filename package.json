@@ -14,7 +14,7 @@
     "coding",
     "assistant"
   ],
-  "author": "Your Name",
+  "author": "Raj Shah",
   "license": "MIT",
   "dependencies": {
     "next": "^13.0.0",
@@ -24,6 +24,12 @@
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.18",
-    "tailwindcss": "^3.2.1"
+    "tailwindcss": "^3.2.1",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^13.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajshah9305/alchemist-frontend.git"
   }
 }
