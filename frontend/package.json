@@ -1,23 +1,35 @@
 {
   "name": "alchemist-frontend",
   "version": "1.0.0",
-  "description": "Alchemist frontend built with Next.js",
+  "description": "Frontend for the Alchemist project",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
+  "keywords": [
+    "alchemist",
+    "ai",
+    "coding",
+    "assistant"
+  ],
+  "author": "Raj Shah",
+  "license": "MIT",
   "dependencies": {
     "next": "^13.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
     "eslint": "^8.0.0",
     "eslint-config-next": "^13.0.0"
   },
-  "author": "Raj Shah",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajshah9305/alchemist-frontend.git"
+  }
 }
