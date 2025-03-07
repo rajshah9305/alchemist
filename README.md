@@ -1,26 +1,26 @@
-# Alchemist Setup Guide for M2 Mac
+# Alchemist
 
-## Prerequisites
-- Docker
-- Docker Compose
-- Node.js and npm
+Alchemist is an offline AI coding assistant powered by Codestral 25.01. It features two personality modes: Normal Mode and Dark Magic Mode, with time-based personality shifts, easter eggs, and code monster error alerts.
 
-## Installation
-1. Clone the repository: `git clone https://github.com/your-username/alchemist.git`
-2. Navigate to the project directory: `cd alchemist`
-3. Build the Docker images: `docker-compose build`
-4. Start the containers: `docker-compose up`
-5. Open your browser and go to `http://localhost:3000` to access Alchemist.
+## Features
 
-## Usage
-- Alchemist is a standalone web application, so you can access it via a browser.
-- The frontend is built with Next.js and Tailwind CSS, providing a hacker-themed chat UI.
-- The backend is powered by FastAPI, handling user authentication, session storage, and communication with the Codestral 25.01 model.
-- The model is hosted locally using vLLM, and you can switch between normal and dark magic modes.
-- Enjoy the easter eggs and have fun with your AI coding assistant!
+- **Normal Mode:** Helpful and friendly.
+- **Dark Magic Mode:** Chaotic, snarky, and glitchy.
+- **Time-based Personality Shifts:** Changes based on the system clock.
+- **Easter Eggs:** Secret phrases trigger lore, jokes, or hidden features.
+- **Code Monster Alerts:** Visuals and messages tied to specific error types.
+
+## Setup
+
+See the [setup/README.md](setup/README.md) for detailed setup instructions.
+
+## Folder Structure
+Alchemist/ ├── ai_engine/ ├── backend/ ├── frontend/ ├── features/ ├── setup/ ├── README.md/ ├── LICENSE/ ├── .gitignore/ ├── .gitattributes/ ├── .env/ ├── .env.example/ ├── .prettierrc/ ├── .eslintrc.json/ ├── package.json/ ├── package-lock.json/ ├── tsconfig.json/ ├── jest.config.js/ ├── .babelrc/ ├── .editorconfig// ├── .gitignore/ ├── .gitattributes/ ├── .env/ ├── .env.example/ ├── .prettierrc/ ├── .eslintrc.json/ ├── package.json/ ├── package-lock.json/ ├── tsconfig.json/ ├──
 
 ## Contributing
-Feel free to contribute to the project by submitting pull requests or opening issues.
+
+Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
-This project is licensed under the MIT License.
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
