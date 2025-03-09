@@ -1,6 +1,6 @@
 # Alchemist
 
-Alchemist is an offline AI coding assistant powered by Codestral 25.01. It features two personality modes: Normal Mode and Dark Magic Mode, with time-based personality shifts, easter eggs, and code monster error alerts.
+Alchemist is an offline AI coding assistant powered by Codestral 25.01. It features two personality modes: Normal Mode and Dark Magic Mode, with time-based personality shifts, easter eggs, and code mo[...]
 
 ## Features
 
@@ -15,7 +15,7 @@ Alchemist is an offline AI coding assistant powered by Codestral 25.01. It featu
 See the [setup/README.md](setup/README.md) for detailed setup instructions.
 
 ## Folder Structure
-Alchemist/ ├── ai_engine/ ├── backend/ ├── frontend/ ├── features/ ├── setup/ ├── README.md/ ├── LICENSE/ ├── .gitignore/ ├── .gitattributes/ ├── .env/ ├── .env.example/ ├── .prettierrc/ ├── .eslintrc.json/ ├── package.json/ ├── package-lock.json/ ├── tsconfig.json/ ├── jest.config.js/ ├── .babelrc/ ├── .editorconfig// ├── .gitignore/ ├── .gitattributes/ ├── .env/ ├── .env.example/ ├── .prettierrc/ ├── .eslintrc.json/ ├── package.json/ ├── package-lock.json/ ├── tsconfig.json/ ├──
+Alchemist/ ├── ai_engine/ ├── backend/ ├── frontend/ ├── features/ ├── setup/ ├── README.md/ ├── LICENSE/ ├── .gitignore/ ├── .gitattributes/ ├
 
 ## Contributing
 
