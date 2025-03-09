@@ -1,64 +1,83 @@
-# backend/ai_engine.py
+# backend/mock_ai_engine.py
 """
-This is a mock implementation of the AI engine components.
-Replace these with actual implementations when available.
+Mock implementation of the AI engine components for development and testing.
+This file is used when the actual ai_engine package is not available.
 """
+import json
+import os
+import logging
+from datetime import datetime
 from typing import Dict, Any, List
 
+logger = logging.getLogger(__name__)
+
 class AIModel:
-    def __init__(self):
+    """Mock AI model for development and testing."""
+    
+    def __init__(self, model_path="mock_model"):
+        self.model_path = model_path
         self.name = "MockCodestralModel"
+        logger.info(f"Initialized mock AI model: {self.name}")
         
     def generate_response(self, prompt: str, personality: Dict[str, Any]) -> str:
-        """Generate a response based on the prompt and personality."""
-        tone = personality.get("tone", "neutral")
-        style = personality.get("style", "informative")
+        """Generate a mock response based on the prompt and personality."""
+        system_message = personality.get("system_message", "Standard mode")
         
-        # Mock response generation
-        if style == "helpful":
-            return f"I'd be happy to help with: {prompt}"
-        elif style == "concise":
-            return f"Answer: {prompt.split()[-1]}"
+        # Generate a response based on the personality mode
+        if "Normal Mode" in system_message:
+            return f"[Normal Mode] Here's a helpful response to your question about: {prompt}"
+        elif "Dark Magic Mode" in system_message:
+            return f"[Dark Magic] Behold, mortal! The answer to '{prompt}' lies within your grasp!"
         else:
-            return f"Here's a response to your query about '{prompt}'"
+            return f"I've processed your request about '{prompt}' and here's my response."
 
 def load_codestral_model() -> AIModel:
-    """Load and return an instance of the AI model."""
-    print("Loading AI model...")
+    """Load and return a mock instance of the AI model."""
+    logger.info("Loading mock AI model...")
     return AIModel()
 
 class MemorySystem:
-    """System for storing and retrieving conversation memory."""
+    """Mock memory system for development and testing."""
     
-    def __init__(self):
-        self.interactions = []
+    def __init__(self, db_path=None):
+        self.memory = []
+        logger.info("Initialized mock memory system")
         
-    def add_interaction(self, interaction: Dict[str, Any]):
+    def add_interaction(self, interaction: Dict[str, Any]) -> None:
         """Add an interaction to memory."""
-        self.interactions.append(interaction)
+        self.memory.append(interaction)
+        logger.debug(f"Added interaction to mock memory, now {len(self.memory)} items")
         
     def get_memory(self) -> List[Dict[str, Any]]:
         """Get all stored interactions."""
-        return self.interactions
+        return self.memory
         
-    def clear_memory(self):
+    def clear_memory(self) -> None:
         """Clear all stored interactions."""
-        self.interactions = []
+        self.memory = []
+        logger.debug("Cleared mock memory")
 
 class PersonalityManager:
-    """Manager for AI personality settings."""
+    """Mock personality manager for development and testing."""
     
-    def __init__(self):
-        self.current_personality = {
-            "style": "helpful",
-            "tone": "friendly",
-            "verbosity": "moderate"
+    def __init__(self, config_path=None):
+        self.config = {
+            'normal_mode': {
+                'greeting': "Hello! I'm the mock Alchemist, your coding assistant.",
+                'system_message': "You are in Normal Mode (MOCK). I'm here to help you with your coding needs."
+            },
+            'dark_magic_mode': {
+                'greeting': "Greetings, mortal. I am the mock Alchemist.",
+                'system_message': "You are in Dark Magic Mode (MOCK). Expect the unexpected."
+            }
         }
+        logger.info("Initialized mock personality manager")
     
     def get_current_personality(self) -> Dict[str, Any]:
-        """Get the current personality settings."""
-        return self.current_personality
+        """Get the current personality based on time of day."""
+        current_hour = datetime.now().hour
         
-    def set_personality(self, personality: Dict[str, Any]):
-        """Update the personality settings."""
-        self.current_personality.update(personality)
+        if 6 <= current_hour < 18:
+            return self.config['normal_mode']
+        else:
+            return self.config['dark_magic_mode']
