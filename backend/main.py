@@ -1,5 +1,5 @@
 # backend/main.py
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import os
@@ -55,6 +55,7 @@ async def startup_event():
             
     except Exception as e:
         logger.error(f"Error during startup: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error during startup")
 
 # Include routers
 app.include_router(router, prefix="/api")
@@ -71,4 +72,9 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
-    return {"status": "healthy"}
+    try:
+        # Example health check logic (extend as needed)
+        return {"status": "healthy"}
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="Health check failed")
