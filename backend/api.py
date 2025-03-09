@@ -1,7 +1,6 @@
-# backend/api.py
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 import logging
 import os
 import sys
@@ -58,7 +57,7 @@ class InteractionResponse(BaseModel):
     timestamp: str
 
 # Dependency to get AI components
-def get_ai_components():
+def get_ai_components() -> Dict[str, Any]:
     return {
         "model": model,
         "memory_system": memory_system,
@@ -69,7 +68,7 @@ def get_ai_components():
 async def interact(
     request: InteractionRequest, 
     components: Dict[str, Any] = Depends(get_ai_components)
-):
+) -> InteractionResponse:
     """Process an interaction with the AI model."""
     try:
         # Get model components
@@ -100,7 +99,7 @@ async def interact(
         raise HTTPException(status_code=500, detail=f"Error processing interaction: {str(e)}")
 
 @router.get("/memory", response_model=List[Dict[str, Any]])
-async def get_memory(components: Dict[str, Any] = Depends(get_ai_components)):
+async def get_memory(components: Dict[str, Any] = Depends(get_ai_components)) -> List[Dict[str, Any]]:
     """Get the in-memory history of interactions."""
     try:
         memory_system = components["memory_system"]
@@ -112,7 +111,7 @@ async def get_memory(components: Dict[str, Any] = Depends(get_ai_components)):
         raise HTTPException(status_code=500, detail=f"Error retrieving memory: {str(e)}")
 
 @router.get("/history", response_model=List[Dict[str, Any]])
-async def get_history():
+async def get_history() -> List[Dict[str, Any]]:
     """Get the database history of interactions."""
     try:
         history = get_all_interactions()
@@ -123,7 +122,7 @@ async def get_history():
         raise HTTPException(status_code=500, detail=f"Error retrieving history: {str(e)}")
 
 @router.delete("/memory")
-async def clear_memory(components: Dict[str, Any] = Depends(get_ai_components)):
+async def clear_memory(components: Dict[str, Any] = Depends(get_ai_components)) -> Dict[str, str]:
     """Clear the in-memory history."""
     try:
         memory_system = components["memory_system"]
@@ -135,7 +134,7 @@ async def clear_memory(components: Dict[str, Any] = Depends(get_ai_components)):
         raise HTTPException(status_code=500, detail=f"Error clearing memory: {str(e)}")
 
 @router.delete("/history")
-async def clear_history():
+async def clear_history() -> Dict[str, str]:
     """Clear the database history."""
     try:
         deleted = clear_interactions()
@@ -146,7 +145,7 @@ async def clear_history():
         raise HTTPException(status_code=500, detail=f"Error clearing history: {str(e)}")
 
 @router.get("/status")
-async def get_status():
+async def get_status() -> Dict[str, Any]:
     """Get the status of the AI system."""
     return {
         "status": "operational",
