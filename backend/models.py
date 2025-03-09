@@ -1,14 +1,16 @@
-# backend/models.py
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import Optional
 import datetime
 
 class Interaction(BaseModel):
     prompt: str
     response: str
-    timestamp: Optional[str] = None
+    timestamp: Optional[datetime.datetime] = None
     
-    def __init__(self, **data):
-        if 'timestamp' not in data:
-            data['timestamp'] = datetime.datetime.now().isoformat()
-        super().__init__(**data)
+    @validator('timestamp', pre=True, always=True)
+    def set_timestamp(cls, value):
+        return value or datetime.datetime.now()
+
+# Example usage
+interaction = Interaction(prompt="Hello", response="Hi there!")
+print(interaction)
