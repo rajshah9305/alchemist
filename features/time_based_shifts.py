@@ -1,30 +1,59 @@
+# features/time_based_shifts.py
 from datetime import datetime
-import pytz
 
 class TimeBasedShifts:
-    def __init__(self, timezone='UTC'):
-        self.timezone = pytz.timezone(timezone)
-        self.personalities = {
-            'normal_mode': {'start': 6, 'end': 18},
-            'dark_magic_mode': {'start': 18, 'end': 6}
-        }
+    """Manages personality shifts based on time of day."""
     
+    def __init__(self, day_mode="normal_mode", night_mode="dark_magic_mode", 
+                 day_start=6, night_start=18):
+        """
+        Initialize the TimeBasedShifts feature.
+        
+        Args:
+            day_mode (str): Personality mode during daytime hours
+            night_mode (str): Personality mode during nighttime hours
+            day_start (int): Hour when day mode begins (0-23)
+            night_start (int): Hour when night mode begins (0-23)
+        """
+        self.day_mode = day_mode
+        self.night_mode = night_mode
+        self.day_start = day_start
+        self.night_start = night_start
+
     def get_current_personality(self):
-        try:
-            current_time = datetime.now(self.timezone)
-            current_hour = current_time.hour
-            
-            if 6 <= current_hour < 18:
-                return "normal_mode"
-            else:
-                return "dark_magic_mode"
-        except Exception as e:
-            # Fallback to normal_mode in case of errors
-            logging.error(f"Error determining personality: {str(e)}")
-            return "normal_mode"
+        """
+        Determine the current personality mode based on time of day.
+        
+        Returns:
+            str: Current personality mode name
+        """
+        current_hour = datetime.now().hour
+        if self.day_start <= current_hour < self.night_start:
+            return self.day_mode
+        else:
+            return self.night_mode
     
-    def set_personality_hours(self, personality, start_hour, end_hour):
-        """Configure custom hours for personality shifts"""
-        if not (0 <= start_hour <= 23 and 0 <= end_hour <= 23):
-            raise ValueError("Hours must be between 0 and 23")
-        self.personalities[personality] = {'start': start_hour, 'end': end_hour}
+    def get_next_shift_time(self):
+        """
+        Calculate when the next personality shift will occur.
+        
+        Returns:
+            datetime: Next shift time
+        """
+        now = datetime.now()
+        current_hour = now.hour
+        
+        if self.day_start <= current_hour < self.night_start:
+            # Currently in day mode, next shift is to night mode
+            next_shift = now.replace(hour=self.night_start, minute=0, second=0, microsecond=0)
+        else:
+            # Currently in night mode, next shift is to day mode
+            if current_hour >= self.night_start:
+                # If it's after night start, the next day mode is tomorrow
+                next_shift = now.replace(hour=self.day_start, minute=0, second=0, microsecond=0)
+                next_shift = next_shift.replace(day=next_shift.day + 1)
+            else:
+                # If it's before day start, the next day mode is today
+                next_shift = now.replace(hour=self.day_start, minute=0, second=0, microsecond=0)
+                
+        return next_shift
